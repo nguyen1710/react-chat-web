@@ -1,0 +1,40 @@
+.col-foot {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    flex: 0 0 50px;
+    position: fixed; 
+    bottom: 0; 
+    right: 0; 
+    background-color: #FFFFFF;
+    width: 80%;
+}
+.compose {
+    padding: 20px;
+    position: relative;
+}
+
+.compose input {
+    width: 100%;
+    border: 0px;
+    font-size: 17px;
+    padding-right: 80px;
+}
+
+.compose .compose-dock .dock {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+}
+
+.compose .compose-dock img {
+    width: 20px;
+    margin-left: 12px;
+    opacity: 0.2;
+}
+
+.compose .compose-dock img:hover {
+    opacity: 0.5;
+}
+
+.compose input:focus {
+    outline: none; /* Loại bỏ viền khi nhấn vào input trong Compose */
+  }

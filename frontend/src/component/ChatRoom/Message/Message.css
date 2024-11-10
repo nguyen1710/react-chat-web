@@ -1,0 +1,167 @@
+
+
+.col-left .message{
+    flex: 1;
+    overflow-y: auto; /* Cho phép cuộn dọc */
+    /* max-height: calc(100vh - 150px); Giới hạn chiều cao, trừ phần header và các phần khác */
+    padding-right: 10px; /* Thêm padding để tạo khoảng trống cho thanh cuộn */
+    width: 100%;
+}
+
+
+.col {
+    flex: auto; 
+    display: flex; 
+    flex-direction: column;
+    position: relative; 
+    
+}
+
+.col .col-content {
+    flex: 1; /* Allow this to take up available vertical space */
+    display: flex; /* Enable flex properties */
+    flex-direction: column; /* Stack children vertically */
+    /* overflow-y: auto; Hide overflow for the entire column */
+    margin-left: -3%;
+}
+
+.grid-message p {
+    margin: 0;
+    font-size: 14px;
+    align-self: flex-start;
+    display: flex;
+
+}
+
+.col .col-content .message {
+    /* margin-left: 20%; */
+    flex: 1; /* Allow it to grow and fill the available space */
+    overflow: auto; 
+    /* padding: 20px; Padding for the message content */
+    margin: 0; /* Remove margin to prevent overflow issues */
+    /* height: 100px; */
+}
+
+
+.message-sent,
+.message-received {
+    clear: both;
+    position: relative;
+}
+
+.message-sent::before,
+.message-received::before,
+.message-sent::after,
+.message-received::after {
+    content: '';
+    display: table;
+}
+
+[class^='grid-'] {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-message {
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    padding-bottom: 70px;
+}
+
+.col-message-received {
+    height: auto;
+    float: right;
+}
+
+.col-message-sent {
+    height: auto;
+    float: left;
+
+}
+
+.message-received {
+    background-color: #e6e6e6;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: right;
+    max-width: 45%; /* Giới hạn chiều rộng của tin nhắn gửi */
+    word-wrap: break-word; /* Bắt buộc xuống dòng khi tin nhắn dài */
+    word-break: break-word; /* Cắt từ khi quá dài */
+}
+
+.message-sent {
+    background-color: #0181ff;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: right;
+    max-width: 45%; /* Giới hạn chiều rộng của tin nhắn gửi */
+    word-wrap: break-word; 
+    word-break: break-word; 
+}
+
+/* .message-sent,
+.message-received {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    padding: 0.5em 0.6em;
+} */
+
+.message-sent p,
+.message-received p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.message-sent {
+    float: right;
+    color: white;
+    background-color: #0181ff;
+    border-radius: 0.5em 0.25em 0.25em 0.5em;
+}
+
+.message-sent:first-child {
+    border-radius: 0.5em 0.5em 0.25em 0.5em;
+}
+
+.message-sent:last-child {
+    border-radius: 0.25em 0.25em 0.5em 0.5em;
+}
+
+.message-sent:only-child {
+    border-radius: 0.5em;
+}
+
+.message-received {
+    float: left;
+    color: black;
+    background-color: #e6e6e6;
+    border-radius: 0.25em 0.5em 0.5em 0.25em;
+}
+
+.message-received:first-child {
+    border-radius: 0.5em 0.5em 0.5em 0.25em;
+    margin-top: 0px;
+}
+
+.message-received:last-child {
+    border-radius: 0.25em 0.5em 0.5em 0.5em;
+}
+
+.message-received:only-child {
+    border-radius: 0.5em;
+}
+
+.col-message-sent,
+.col-message-received {
+    margin-top: 0.25em !important;
+}
+
+.message {
+    min-height: 53.33203125em;
+    display: flex;
+    padding: 20px;
+    padding-top: 70px;
+}
