@@ -126,9 +126,9 @@ function ChatRoom() {
                     </section>
                 </div>
             </div>        */}
-            <MessageContainer/>
+            <MessageContainer username={username} roomId={roomId}/>
 
-            <Compose/>
+            <Compose username={username} roomId={roomId}/>
 
     
     </>
