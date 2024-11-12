@@ -1,24 +1,59 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import avt1 from '~/assets/img/avatar-1.png'
 import setting from '~/assets/img/settings.svg'
 import "./ChatRoom.css"
 import Compose from './Compose/Compose'
 import MessageContainer from './Message/MessageContainer'
+import socket from '../../socketio/socket'
+import { useLocation } from 'react-router-dom';
+
 function ChatRoom() {
-  return (
+    // const [messages, setMessages] = useState([]);
+    // const [newMessage, setNewMessage] = useState('');
+    const firstRenderRef = useRef(true)
+
+    const location = useLocation();
+    // Lấy `username` và `roomId` từ query params
+    const searchParams = new URLSearchParams(location.search);
+    const username = searchParams.get('name');
+    const roomId = searchParams.get('roomId');
+
+    
+
+    useEffect(() => {
+        if(firstRenderRef.current === true) {
+            socket.emit("join", { roomId, username });
+        }
+        if(firstRenderRef &&firstRenderRef.current === true) {
+            firstRenderRef.current = false
+        }
+        
+    },[])
+    // useEffect(() => {
+    //     console.log(username, roomId)
+    //     if(username && roomId) {
+    //     }
+
+    //     return () => {
+    //         socket.off("connect"); // Dọn dẹp sự kiện để tránh trùng lặp
+    //     };
+    // }, [username, roomId])
+
+    
+    return (
     <>
         <header>
         <div className="container">
             <div className="middle">
             <h3>Tôi</h3>
-            <p>NodeSending -- 22</p>
+            <p>NodeSending -- {roomId}</p>
             </div>
             <div className="right">
             <div className="username">
                 <div className="settings">
                 <img src={setting} alt="Settings" />
                 </div>
-                Hello
+                {username}
                 <div className="user-avatar">
                 <img src={avt1} alt="User Avatar" />
                 </div>
