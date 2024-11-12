@@ -80,7 +80,6 @@ io.on("connection", function(client) {
     // await room.save();
     io.to(roomId).emit("thread", {username, message, time})
   })
-
   });
 });
 
