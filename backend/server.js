@@ -61,14 +61,25 @@ io.on("connection", function(client) {
             console.log(`Thêm ${username} vào danh sách người dùng trong phòng ${roomId}`);
             // io.to(roomId).emit("updateUserList", username);
             console.log(room.users)
-
+            // io.to(roomId).emit("")
     
           }
           else {
             console.log(`Người dùng đã tồn tại`)
           }
-
     }
+
+    //khi gửi tin
+  client.on("message", async function(data){ //data là dữ liệu hay tin nhắn
+    //khi gửi tin nhắn thì sẽ chuyển lên server và server sẽ chuyển tới room
+    const {username, message, roomId, time} = data
+    console.log(`${username} : ${message} + ${roomId} + + ${time}`)
+    // let id = roomId
+    // let room = await Room.findOne({roomId : id})
+    // room.messages.push({username: username, content: content, time: time})
+    // await room.save();
+    io.to(roomId).emit("thread", {username, message, time})
+  })
   });
 });
 
