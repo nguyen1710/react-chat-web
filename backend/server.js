@@ -56,13 +56,13 @@ io.on("connection", function(client) {
       }
     } else {
         // client.emit("loadMessages", {messages: room.messages, users: room.users})
-        client.emit("loadMessages", {users: room.users})
+        // client.emit("loadMessages", {users: room.users})
 
         if (!room.users.includes(username)) {
             room.users.push(username); // Thêm username vào danh sách người dùng
             await room.save(); // Lưu lại sự thay đổi
             console.log(`Thêm ${username} vào danh sách người dùng trong phòng ${roomId}`);
-            // io.to(roomId).emit("updateUserList", username);
+            io.to(roomId).emit("updateUserList", {users: room.users});
             console.log(room.users)
             // io.to(roomId).emit("")
     

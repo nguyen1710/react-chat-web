@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
+
 import avt1 from '~/assets/img/avatar-1.png'
+import avt2 from '~/assets/img/avatar-2.png'
+import avt3 from '~/assets/img/avatar-3.png'
+import avt4 from '~/assets/img/avatar-4.png'
+import avt5 from '~/assets/img/avatar-5.png'
+
 import setting from '~/assets/img/settings.svg'
 import "./ChatRoom.css"
 import Compose from './Compose/Compose'
@@ -18,7 +24,7 @@ function ChatRoom() {
     const username = searchParams.get('name');
     const roomId = searchParams.get('roomId');
     const [roomData, setRoomData] = useState(null)
-    // const [users , setUsers] = useState([])
+    const [users , setUsers] = useState([])
 
 
     useEffect(() => {
@@ -31,29 +37,29 @@ function ChatRoom() {
         
     },[])
 
-    // useEffect(() => {
-    //     // Lắng nghe sự kiện "thread" từ server
-    //     socket.on("loadUsers", (data) => {
-    //       // Khi nhận được dữ liệu từ server, thêm tin nhắn vào state
-    //       setUsers(data.users)
-    //     });
-    //     console.log(users)
-    //     // Dọn dẹp khi component bị unmount
-    //     return () => {
-    //       socket.off("loadUsers");
-    //     };
-    //   }, [users]); // Chỉ chạy 1 lần khi component được mount
+    useEffect(() => {
+        // Lắng nghe sự kiện 'removeUserList' từ server
+        socket.on("updateUserList", (data) => {
+          setUsers(data.users);
+        });
+    
+        // Khi component unmount, tắt kết nối
+        return () => {
+          socket.off("updateUserList");
+        };
+      }, []);
 
-
-    // useEffect(() => {
-    //     console.log(username, roomId)
-    //     if(username && roomId) {
-    //     }
-
-    //     return () => {
-    //         socket.off("connect"); // Dọn dẹp sự kiện để tránh trùng lặp
-    //     };
-    // }, [username, roomId])
+      useEffect(() => {
+        // Lắng nghe sự kiện 'removeUserList' từ server
+        socket.on("removeUserList", (users) => {
+          setUsers((prevUsers) => prevUsers.filter((user) => user !== users));
+        });
+    
+        // Khi component unmount, tắt kết nối
+        return () => {
+          socket.off("removeUserList");
+        };
+      }, []);
 
 
     useEffect(() => {
@@ -61,6 +67,7 @@ function ChatRoom() {
             try{
                 const response = await axios.get(`http://localhost:2312/api/rooms/${roomId}`)
                 setRoomData(response.data)
+                setUsers(response.data.users || [])
             }catch(error) {
                 console.log("Lỗi khi lấy dữ liệu phòng: ", error)
             }
@@ -68,15 +75,7 @@ function ChatRoom() {
 
         fetchRoomData()
     },[roomId])
-    // console.log(roomData.users)
-    // if (roomData && roomData.users) {
-    //   console.log("Danh sách người dùng trong phòng:", roomData.users); // In ra danh sách người dùng
-    // }
-    useEffect(() => {
-        
-    })
-    
-    // console.log(roomData)
+    console.log(users)
     return (
     <>
         <header>
@@ -100,33 +99,29 @@ function ChatRoom() {
         </header> 
 
  
-            <div className="col-left" style={{ position: 'fixed', top: 0, height: '100%' }}>
-                <div className="col-content">
-                    <div className="messages">
+        <div className="col-left" style={{ position: 'fixed', top: 0, height: '100%' }}>
+            <div className="col-content">
+                <div className="messages">
                     {/* <li style={{ textAlign: 'center' }}> */}
                         <p style={{ fontSize: '20px', color: '#0182ff' }}>Số người trong phòng</p>
-                 
+                    
 
                     {/* Hiển thị danh sách người dùng */}
                     <ul id="userList">
-                        {/* Các mục người dùng sẽ được thêm vào đây */}
-                        {/* <li>
-                            <div className="avatar">
-                                <div className="avatar-image">
-                                <div className="status online"></div>
-                                <img src={avt1} alt="User Avatar" />
-                                </div>
-                            </div>
-                            <h3>Nancy Scott</h3>
-                            <p>Đang Online</p>
-                        </li> */}
-                        { roomData ? (Array.isArray(roomData.users) && roomData.users.map((user, index) => {
+                        { users.length > 0 ? (Array.isArray(users) && users.map((user, index) => {
+                            // Tạo mảng chứa các ảnh avatar
+                            const avatars = [
+                                avt1, avt2, avt3, avt4, avt5
+                            ];
+
+                            // Random một avatar ngẫu nhiên từ mảng
+                            const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
                                 return (
                                     <li key={index}>
                                 <div className="avatar">
                                     <div className="avatar-image">
                                     <div className="status online"></div>
-                                    <img src={avt1} alt="User Avatar" />
+                                    <img src={randomAvatar} alt="User Avatar" />
                                     </div>
                                 </div>
                                 <h3>{user}</h3>
@@ -136,40 +131,13 @@ function ChatRoom() {
                             })) : <p>Đang tải dữ liệu...</p>                           
                         }
                     </ul>
-
-                    {/* <ul id="userList">
-                        <!-- Các mục người dùng sẽ được thêm vào đây -->
-
-                        </ul> */}
-                    </div>
                 </div>
             </div>
+        </div>
 
+        <MessageContainer username={username} roomId={roomId} roomData={roomData}/>
 
-            {/* chat-section
-            <div className="col">
-                <div className="col-content" style={{ marginBottom: "5%" }}>
-                    <section className="message">
-                    <div className="grid-message">
-                        <Message 
-                            type="received" 
-                            name="Nancy Scott" 
-                            time="9:00 PM" 
-                            text="Ok."
-                        />
-                        <Message 
-                            type="sent" 
-                            name="You" 
-                            time="9:05 PM" 
-                            text="Not anymore."
-                        />
-                    </div>
-                    </section>
-                </div>
-            </div>        */}
-            <MessageContainer username={username} roomId={roomId} roomData={roomData}/>
-
-            <Compose username={username} roomId={roomId}/>
+        <Compose username={username} roomId={roomId}/>
 
     
     </>
