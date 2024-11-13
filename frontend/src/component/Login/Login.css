@@ -72,7 +72,7 @@ html {
   .form-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     margin: 0 0 20px;
   }
   .form-group:last-child {
@@ -109,22 +109,31 @@ html {
     color: rgba(0, 0, 0, 0.8);
   }
 
+  .form-group button:hover {
+    background: #3267bd;
+
+  }
+
   .form-group button {
     outline: none;
     background: #4285F4;
     border: 0;
     width: 100%;
-    border-radius: 4px;
+    border-radius: 8px;
     color: #FFFFFF;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: 500;
-    line-height: inherit;
+    padding: 10px;
+    /* font-family: inherit;
+    font-size: inherit;*/
+    font-weight: 700;
+    font-size: 16px;
+    /* line-height: inherit;  */
     text-transform: uppercase;
     cursor: pointer;
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
+    align-self: center;
+    margin: 20px 120px;
   }
 
   .form-group .form-remember {
@@ -167,9 +176,11 @@ html {
   .form-header h1 {
     padding: 4px 0;
     color: #4285F4;
-    font-size: 24px;
+    font-size: 36px;
     font-weight: 700;
     text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px;
   }
   
   .cp-fab {
