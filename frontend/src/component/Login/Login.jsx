@@ -64,7 +64,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-
+import logo from '~/assets/img/logo.svg'
 function Login() {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
@@ -88,6 +88,7 @@ function Login() {
           <div className="form-toggle"></div>
           <div className="form-panel one">
             <div className="form-header">
+              <img src={logo}/>
               <h1>Account Login</h1>
             </div>
             <div className="form-content">

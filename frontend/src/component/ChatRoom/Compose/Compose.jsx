@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Compose.css"
 import socket from '~/socketio/socket'
 import { formatTime } from "~/utils/formatTime";
-
+import smile from "~/assets/img/smile.svg"
+import picture from "~/assets/img/picture.svg"
 // eslint-disable-next-line react/prop-types
 const Compose = ({username, roomId}) => {
   const [message, setMessage] = useState(""); // Lưu trữ giá trị input
@@ -46,8 +47,8 @@ const Compose = ({username, roomId}) => {
         />
         <div className="compose-dock">
           <div className="dock">
-            {/* <img src="./img/picture.svg" alt="Picture" />
-            <img src="./img/smile.svg" alt="Smile" /> */}
+            <img src={picture} alt="Picture" />
+            <img src={smile} alt="Smile" />
           </div>
         </div>
       </div>
