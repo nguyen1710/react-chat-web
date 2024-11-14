@@ -9,6 +9,10 @@ export default defineConfig({
     alias: [
       { find: '~', replacement: '/src' }
     ]
+  },
+  server: {
+    host: '0.0.0.0', // Lắng nghe trên tất cả các IP
+    port: 5173,       // Đảm bảo cổng là 5173
   }
   
 })

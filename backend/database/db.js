@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const dotenv = require('dotenv');
+const MongoClient = require('mongodb').MongoClient
 
 // Nạp các biến môi trường từ file .env
 dotenv.config()
