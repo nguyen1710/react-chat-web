@@ -3,20 +3,28 @@ services:
     container_name: frontend
     build: 
       context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    stdin_open: true
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - my-network
 
   backend:
-    container_name: backend
+    # container_name: backend
     build: 
       context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "2312"
     depends_on:
       - mongo
     networks:
       - my-network
+    deploy:
+      replicas: 3
+  
 
   mongo:
     container_name: mongoDB
@@ -27,6 +35,19 @@ services:
       - my-network
     volumes:
       - mongo-data:/data/db
+  
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - my-network
+    
 
 networks:
   my-network:
@@ -36,3 +57,4 @@ networks:
 volumes:
   mongo-data:
     driver: local
+  

@@ -5,12 +5,12 @@ const socket_IO = require('socket.io');
 const http = require('http');
 const server = http.Server(app);
 const cors = require('cors');
-
 const dotenv = require('dotenv');
 const connectToDB = require('./database/db.js');
 dotenv.config();
 const Room = require('./model/room.model.js');
-
+const os = require('os');
+const hostname = os.hostname();
 const port = process.env.PORT || 8081;
 
 // Cấu hình CORS cho Express
@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 io.on("connection", function(client) {
   let session_username, id;
   console.log("Có người tham gia");
-
+  console.log(hostname)
   client.on("join", async function (data) {
     const { roomId, username } = data;
     console.log(`Người dùng ${username} tham gia vào phòng ${roomId}`);
