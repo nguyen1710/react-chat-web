@@ -12,19 +12,15 @@ services:
       - my-network
 
   backend:
-    # container_name: backend
+    container_name: backend
     build: 
       context: ./backend
-      dockerfile: Dockerfile
     ports:
-      - "2312"
+      - "2312:2312"
     depends_on:
       - mongo
     networks:
       - my-network
-    deploy:
-      replicas: 3
-  
 
   mongo:
     container_name: mongoDB
@@ -35,19 +31,6 @@ services:
       - my-network
     volumes:
       - mongo-data:/data/db
-  
-  nginx:
-    image: nginx
-    container_name: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - backend
-    networks:
-      - my-network
-    
 
 networks:
   my-network:
