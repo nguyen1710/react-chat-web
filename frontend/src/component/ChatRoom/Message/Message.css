@@ -14,7 +14,6 @@
     display: flex; 
     flex-direction: column;
     position: relative; 
-    
 }
 
 .col .col-content {
@@ -23,6 +22,9 @@
     flex-direction: column; /* Stack children vertically */
     /* overflow-y: auto; Hide overflow for the entire column */
     margin-left: -3%;
+    align-self: flex-end;
+    width: 80%;
+
 }
 
 .grid-message p {
@@ -164,4 +166,5 @@
     display: flex;
     padding: 20px;
     padding-top: 70px;
+    /* width: 100%; */
 }
